@@ -38,8 +38,7 @@ while continue_game != 'n':
 
     scores[user] += now_chances
 
-    continue_game = raw_input("Souhaitez-vous continuer la partie (O/N) ?")
-    continue_game = continue_game.lower()
+    continue_game = get_input()
 
 set_scores(scores)
 

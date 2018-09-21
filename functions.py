@@ -6,23 +6,25 @@ from random import choice
 from donnees import *
 
 def get_scores():
-    if os.path.exists(scores_file_name):
+    try:
         scores_file = open(scores_file_name, "rb")
         depickler = pickle.Unpickler(scores_file)
         scores = depickler.load()
         scores_file.close()
-    else:
+    except (IOError, EOFError) as e:
         scores = {}
     return scores
 
 def get_words():
-    if os.path.exists(words_file_name):
+    try:
         words_file = open(words_file_name, "rb")
         depickler = pickle.Unpickler(words_file)
         words = depickler.load()
         words_file.close()
-    else:
-        words = [ "erreur" ]
+    except (IOError, EOFError) as e:
+        words = []
+    if not words:
+        words = [ "pendu" ]
     return words
 
 def set_scores(scores):

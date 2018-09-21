@@ -5,13 +5,15 @@ import pickle
 from random import choice
 
 def get_words():
-    if os.path.exists("mots"):
+    try:
         words_file = open("mots", "rb")
         depickler = pickle.Unpickler(words_file)
         words = depickler.load()
         words_file.close()
-    else:
-        words = [ "erreur" ]
+    except (IOError, EOFError) as e:
+        words = []
+    if not words:
+        words = [ "pendu" ]
     return words
 
 def set_words(words):

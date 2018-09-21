@@ -35,7 +35,8 @@ def get_input():
 if len(sys.argv) > 1:
     words=get_words()
     for word in sys.argv:
-        words.append(word)
+        if word not in words and word.isalpha():
+            words.append(word)
     del words[words.index(sys.argv[0])]
 
 else:

@@ -5,57 +5,55 @@ from random import choice
 
 from donnees import *
 
-def recup_scores():
-    if os.path.exists(nom_fichier_scores):
-        fichier_scores = open(nom_fichier_scores, "rb")
-        depickler = pickle.Unpickler(fichier_scores)
+def get_scores():
+    if os.path.exists(scores_file_name):
+        scores_file = open(scores_file_name, "rb")
+        depickler = pickle.Unpickler(scores_file)
         scores = depickler.load()
-        fichier_scores.close()
+        scores_file.close()
     else:
         scores = {}
     return scores
 
-def recup_mots():
-    if os.path.exists(nom_fichier_mots):
-        fichier_mots = open(nom_fichier_mots, "rb")
-        depickler = pickle.Unpickler(fichier_mots)
-        liste_mots = depickler.load()
-        fichier_mots.close()
+def get_words():
+    if os.path.exists(words_file_name):
+        words_file = open(words_file_name, "rb")
+        depickler = pickle.Unpickler(words_file)
+        words = depickler.load()
+        words_file.close()
     else:
-        liste_mots = [ "erreur" ]
-    return liste_mots
+        words = [ "erreur" ]
+    return words
 
-def enregistrer_scores(scores):
-    fichier_scores = open(nom_fichier_scores, "wb") # On écrase les anciens scores
-    mon_pickler = pickle.Pickler(fichier_scores)
-    mon_pickler.dump(scores)
-    fichier_scores.close()
+def set_scores(scores):
+    scores_file = open(scores_file_name, "wb")
+    pickler = pickle.Pickler(scores_file)
+    pickler.dump(scores)
+    scores_file.close()
 
-def recup_nom_utilisateur():
-    nom_utilisateur = raw_input("Tapez votre nom: ")
-    # On met la première lettre en majuscule et les autres en minuscules
-    nom_utilisateur = nom_utilisateur.capitalize()
-    if not nom_utilisateur.isalnum() or len(nom_utilisateur)<4:
+def get_user():
+    user = raw_input("Tapez votre nom: ")
+    user = user.capitalize()
+    if not user.isalnum() or len(user)<4:
         print("Ce nom est invalide.")
-        # On appelle de nouveau la fonction pour avoir un autre nom
-        return recup_nom_utilisateur()
+        return get_user()
     else:
-        return nom_utilisateur
+        return user
 
-def recup_lettre():
-    lettre = raw_input("Tapez une lettre: ")
-    lettre = lettre.lower()
-    if len(lettre)>1 or not lettre.isalpha():
+def get_char():
+    char = raw_input("Tapez une lettre: ")
+    char = char.lower()
+    if len(char)>1 or not char.isalpha():
         print("Vous n'avez pas saisi une lettre valide.")
-        return recup_lettre()
+        return get_char()
     else:
-        return lettre
+        return char
 
-def recup_mot_masque(mot_complet, lettres_trouvees):
-    mot_masque = ""
-    for lettre in mot_complet:
-        if lettre in lettres_trouvees:
-            mot_masque += lettre
+def get_masked_word(word, found_letters):
+    masked_word = ""
+    for char in word:
+        if char in found_letters:
+            masked_word += char
         else:
-            mot_masque += "*"
-    return mot_masque
+            masked_word += "*"
+    return masked_word

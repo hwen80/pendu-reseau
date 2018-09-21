@@ -1,9 +1,6 @@
 # coding: utf-8
-# Nombre de coups par partie
-nb_coups = 8
+chances = 8
 
-# Nom du fichier stockant les scores
-nom_fichier_scores = "scores"
+scores_file_name = "scores"
 
-# Nom du fichier stockant les mots
-nom_fichier_mots = "mots"
+words_file_name = "mots"

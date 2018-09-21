@@ -4,36 +4,38 @@ import os
 import pickle
 from random import choice
 
-def recup_mots():
+def get_words():
     if os.path.exists("mots"):
-        fichier_mots = open("mots", "rb")
-        depickler = pickle.Unpickler(fichier_mots)
-        mots = depickler.load()
-        fichier_mots.close()
+        words_file = open("mots", "rb")
+        depickler = pickle.Unpickler(words_file)
+        words = depickler.load()
+        words_file.close()
     else:
-        mots = [ "erreur" ]
-    return mots
+        words = [ "erreur" ]
+    return words
 
-def enregistrer_mots(mots):
-    fichier_mots = open("mots", "wb")
-    pickler = pickle.Pickler(fichier_mots)
-    pickler.dump(mots)
-    fichier_mots.close()
+def set_words(words):
+    words_file = open("mots", "wb")
+    pickler = pickle.Pickler(words_file)
+    pickler.dump(words)
+    words_file.close()
 
-def recup_saisie():
-    print("Entrer mot à ajouter, stop pour arrêter")
-    mot = raw_input()
-    if not mot.isalpha():
+def get_input():
+    print("Entrez le mot à ajouter, stop pour arrêter")
+    word = raw_input()
+    if not word.isalpha():
         print("Ce mot est invalide.")
-        return recup_saisie()
+        return get_input()
     else:
-        return mot
+        return word
 
-mot=""
-mots=recup_mots()
-while mot != "stop":
-    mot=recup_saisie()
-    if mot != "stop":
-        mots.append(mot.lower())
+word=""
+words=get_words()
+while word != "stop":
+    word=get_input()
+    if word in words:
+        print("Ce mot est déjà présent.")
+    if word != "stop" and word not in words:
+        words.append(word.lower())
 print("Enregistrement des mots")
-enregistrer_mots(mots)
+set_words(words)

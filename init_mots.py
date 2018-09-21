@@ -37,7 +37,6 @@ if len(sys.argv) > 1:
     for word in sys.argv:
         if word not in words and word.isalpha():
             words.append(word)
-    del words[words.index(sys.argv[0])]
 
 else:
     word=""

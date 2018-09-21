@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 import os
+import sys
 import pickle
 from random import choice
 
@@ -31,13 +32,21 @@ def get_input():
     else:
         return word
 
-word=""
-words=get_words()
-while word != "stop":
-    word=get_input()
-    if word in words:
-        print("Ce mot est déjà présent.")
-    if word != "stop" and word not in words:
-        words.append(word.lower())
+if len(sys.argv) > 1:
+    words=get_words()
+    for word in sys.argv:
+        words.append(word)
+    del words[words.index(sys.argv[0])]
+
+else:
+    word=""
+    words=get_words()
+    while word != "stop":
+        word=get_input()
+        if word in words:
+            print("Ce mot est déjà présent.")
+        if word != "stop" and word not in words:
+            words.append(word.lower())
+
 print("Enregistrement des mots")
 set_words(words)

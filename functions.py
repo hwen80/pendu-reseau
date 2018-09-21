@@ -32,6 +32,15 @@ def set_scores(scores):
     pickler.dump(scores)
     scores_file.close()
 
+def get_user():     
+    user = raw_input("Tapez votre nom: ")
+    user = user.capitalize()
+    if not user.isalnum() or len(user)<4:
+        print("Ce nom est invalide.")
+        return get_user()
+    else:
+        return user
+
 def get_user(s):
     data = pickle.dumps(["Tapez votre nom: ", "input"])
     msg_send(s, data)
@@ -43,6 +52,15 @@ def get_user(s):
         return get_user()
     else:
         return user
+
+def get_char():
+    char = raw_input("Tapez une lettre: ")
+    char = char.lower()
+    if len(char)>1 or not char.isalpha():
+        print("Vous n'avez pas saisi une lettre valide.")
+        return get_char()
+    else:
+        return char
 
 def get_char(s):
     data = pickle.dumps(["Tapez une lettre: ", "input"])
@@ -65,6 +83,15 @@ def get_masked_word(word, found_letters):
         else:
             masked_word += "*"
     return masked_word
+
+def get_input():
+    print("Souhaitez-vous continuer à jouer ? O/N")
+    input = raw_input()
+    if input != 'o' and input != 'n':
+        print("Gnagnagna, tu racontes n'importe quoi.")
+        return get_input()
+    else:
+        return input
 
 def get_input(s):
     data = pickle.dumps(["Souhaitez-vous continuer à jouer ? O/N", "input"])

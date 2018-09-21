@@ -39,3 +39,4 @@ while not "exit" in data:
         msg = pickle.dumps(input)
         msg_send(s, msg)
 print("Fin de partie.")
+s.close()

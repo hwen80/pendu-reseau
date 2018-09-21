@@ -72,7 +72,9 @@ def get_input(s):
     data = msg_rec(s)
     input = pickle.loads(data)
     if input != 'o' and input != 'n':
-        print("Gnagnagna, tu racontes n'importe quoi.")
-        return get_input()
+        message = "Gnagnagna, tu racontes n'importe quoi."
+        data = pickle.dumps([message, ""])
+        msg_send(s, data)
+        return get_input(s)
     else:
         return input

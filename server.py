@@ -4,8 +4,9 @@ import socket, pickle, struct
 
 def create_socket():
     s = socket.socket()
-    host = "0.0.0.0"
+    host = "10.0.8.1"
     port = 12345
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.bind((host,port))
     s.listen(5)
     return s

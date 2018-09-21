@@ -1,9 +1,8 @@
 # coding: utf-8
-import os
-import pickle
+import os, pickle
 from random import choice
-
 from donnees import *
+from server import *
 
 def get_scores():
     try:
@@ -33,8 +32,11 @@ def set_scores(scores):
     pickler.dump(scores)
     scores_file.close()
 
-def get_user():
-    user = raw_input("Tapez votre nom: ")
+def get_user(s):
+    data = pickle.dumps(["Tapez votre nom: ", "input"])
+    msg_send(s, data)
+    data = msg_rec(s)
+    user = pickle.loads(data)
     user = user.capitalize()
     if not user.isalnum() or len(user)<4:
         print("Ce nom est invalide.")
@@ -42,11 +44,15 @@ def get_user():
     else:
         return user
 
-def get_char():
-    char = raw_input("Tapez une lettre: ")
+def get_char(s):
+    data = pickle.dumps(["Tapez une lettre: ", "input"])
+    msg_send(s, data)
+    data = msg_rec(s)
+    char = pickle.loads(data)
     char = char.lower()
     if len(char)>1 or not char.isalpha():
-        print("Vous n'avez pas saisi une lettre valide.")
+        data = pickle.dumps("Vous n'avez pas saisi une lettre valide.")
+        msg_send(s, data)
         return get_char()
     else:
         return char
@@ -60,9 +66,11 @@ def get_masked_word(word, found_letters):
             masked_word += "*"
     return masked_word
 
-def get_input():
-    print("Souhaitez-vous continuer à jouer ? O/N")
-    input = raw_input()
+def get_input(s):
+    data = pickle.dumps(["Souhaitez-vous continuer à jouer ? O/N", "input"])
+    msg_send(s, data)
+    data = msg_rec(s)
+    input = pickle.loads(data)
     if input != 'o' and input != 'n':
         print("Gnagnagna, tu racontes n'importe quoi.")
         return get_input()

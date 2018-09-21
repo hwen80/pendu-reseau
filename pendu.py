@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 from donnees import *
-from fonctions import *
+from functions import *
 
 scores = get_scores()
 user = get_user()
